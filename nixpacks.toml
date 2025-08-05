@@ -10,25 +10,30 @@
 providers = ["python", "node"]
 
 [phases.setup]
-# Install additional packages needed by the build. Node.js is required
-# for building the front‑end, and pnpm is used as the package manager.
-nixPkgs = ["nodejs", "pnpm"]
+# No additional system packages are required here. Nixpacks will
+# automatically provide Node.js and npm when the "node" provider is
+# present. We deliberately avoid installing nodejs via nixPkgs to
+# prevent conflicts between multiple Node.js installations (which
+# caused prior build failures). If you wish to use pnpm instead of
+# npm, install it here with nixPkgs = ["pnpm"].
+# nixPkgs = ["pnpm"]
 
 [phases.install]
-# Install Python dependencies and front‑end dependencies. The
-# `--prefix` flag scopes the pnpm install into the frontend folder so
-# it doesn't install packages in the repository root.
+# Install Python dependencies and front‑end dependencies. We use npm
+# instead of pnpm to avoid conflicts with node/corepack in the Nix
+# environment. The `--prefix` flag scopes the install into the
+# frontend folder so it doesn't affect the repository root.
 commands = [
   "pip install -r backend/requirements.txt",
-  "pnpm install --prefix frontend"
+  "npm install --prefix frontend"
 ]
 
 [phases.build]
 # Build the React application and copy the output into the Flask
 # static directory. Removing the existing static files ensures
-# outdated assets are not served.
+# outdated assets are not served. We use npm here instead of pnpm.
 commands = [
-  "pnpm run build --prefix frontend",
+  "npm run build --prefix frontend",
   "rm -rf backend/src/static/*",
   "cp -r frontend/dist/* backend/src/static"
 ]
