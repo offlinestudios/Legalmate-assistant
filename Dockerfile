@@ -12,9 +12,12 @@ FROM node:18-alpine AS frontend-build
 # Set working directory for the front‑end build
 WORKDIR /app/frontend
 
-# Copy package manifest and install dependencies
+# Copy package manifest and install dependencies. We pass
+# --legacy-peer-deps to npm install to bypass strict peer
+# dependency resolution, which otherwise fails due to a mismatch
+# between date-fns and react-day-picker.
 COPY frontend/package*.json ./
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copy the rest of the front‑end source and build
 COPY frontend .
