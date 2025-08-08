@@ -1,16 +1,50 @@
-import { useState, useRef, useEffect } from 'react'
-import { Button } from '@/components/ui/button.jsx'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
-import { Badge } from '@/components/ui/badge.jsx'
-import { Textarea } from '@/components/ui/textarea.jsx'
-import { Input } from '@/components/ui/input.jsx'
-import { Upload, Brain, Shield, MessageSquare, Handshake, FileText, AlertTriangle, Sparkles, Mic, MicOff, Send, Bot, User, Volume2, VolumeX } from 'lucide-react'
+import React, { useState, useRef, useEffect } from 'react'
+import { Button } from './components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card'
+import { Input } from './components/ui/input'
+import { Textarea } from './components/ui/textarea'
+import { 
+  Send, 
+  Mic, 
+  MicOff, 
+  Volume2, 
+  VolumeX, 
+  FileText, 
+  Shield, 
+  MessageSquare, 
+  Scale, 
+  AlertTriangle, 
+  FileCheck,
+  Languages,
+  Menu,
+  PanelLeft,
+  Settings,
+  HelpCircle,
+  User,
+  Crown,
+  LogOut,
+  Upload,
+  X,
+  ChevronDown
+} from 'lucide-react'
 import './App.css'
 
 function App() {
-  const [selectedMode, setSelectedMode] = useState(null)
   const [documentText, setDocumentText] = useState('')
+  const [analysisResult, setAnalysisResult] = useState('')
+  const [selectedMode, setSelectedMode] = useState('')
   const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [showHelpModal, setShowHelpModal] = useState(false)
+  const [showSettingsModal, setShowSettingsModal] = useState(false)
+  const [showPricingModal, setShowPricingModal] = useState(false)
+  const [showReleaseNotesModal, setShowReleaseNotesModal] = useState(false)
+  const [showHelpMenu, setShowHelpMenu] = useState(false)
+  const [showAccountMenu, setShowAccountMenu] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [user, setUser] = useState(null)
+  const [showAuthModal, setShowAuthModal] = useState(false)
+  const [uploadedFile, setUploadedFile] = useState(null)e)
   const [analysis, setAnalysis] = useState('')
   
   // Chatbot states
