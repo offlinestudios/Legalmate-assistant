@@ -1,0 +1,10 @@
+node_modules
+dist
+.git
+.gitignore
+Dockerfile*
+.vscode
+.env*
+*.log
+**/coverage
+**/.DS_Store
